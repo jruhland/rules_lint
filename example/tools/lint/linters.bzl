@@ -1,5 +1,6 @@
 "Define linter aspects"
 
+load("@aspect_rules_lint//lint:biome.bzl", "lint_biome_aspect")
 load("@aspect_rules_lint//lint:buf.bzl", "lint_buf_aspect")
 load("@aspect_rules_lint//lint:checkstyle.bzl", "lint_checkstyle_aspect")
 load("@aspect_rules_lint//lint:clang_tidy.bzl", "lint_clang_tidy_aspect")
@@ -14,6 +15,13 @@ load("@aspect_rules_lint//lint:shellcheck.bzl", "lint_shellcheck_aspect")
 load("@aspect_rules_lint//lint:spotbugs.bzl", "lint_spotbugs_aspect")
 load("@aspect_rules_lint//lint:stylelint.bzl", "lint_stylelint_aspect")
 load("@aspect_rules_lint//lint:vale.bzl", "lint_vale_aspect")
+
+biome = lint_biome_aspect(
+    binary = Label("@//tools/lint:biome"),
+    configs = Label("@//:biome.json"),
+)
+
+biome_test = lint_test(aspect = biome)
 
 buf = lint_buf_aspect(
     config = Label("@//:buf.yaml"),

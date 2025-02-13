@@ -5,10 +5,13 @@ we don't want to trigger eager fetches of these for builds that don't want to ru
 """
 
 load("@aspect_rules_lint//format:defs.bzl", "format_multirun", "format_test")
+load("@npm//:@biomejs_biome/package_json.bzl", biome_bin = "bin")
 load("@npm//:prettier/package_json.bzl", prettier = "bin")
 load("@rules_java//java:defs.bzl", "java_binary")
 
 package(default_visibility = ["//:__subpackages__"])
+
+biome_bin.biome_binary(name = "biome")
 
 prettier.prettier_binary(
     name = "prettier",
@@ -72,7 +75,7 @@ format_multirun(
     # You can use standard gofmt instead of stricter gofumpt:
     # go = "@go_sdk//:bin/gofmt",
     go = "@aspect_rules_lint//format:gofumpt",
-    graphql = ":prettier",
+    graphql = ":biome",
     html = ":prettier",
     java = ":java-format",
     javascript = ":prettier",
@@ -103,6 +106,7 @@ format_test(
     # cc = "@llvm_toolchain_llvm//:bin/clang-format",
     # FIXME: something is not hermetic about this java_binary, on CI we see
     # error: com/sun/source/tree/Tree
+    graphql = ":biome",
     # java.lang.NoClassDefFoundError: com/sun/source/tree/Tree
     # java = ":java-format",
     javascript = ":prettier",

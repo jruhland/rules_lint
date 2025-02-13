@@ -137,6 +137,15 @@ alias(
 )
 
 bzl_library(
+    name = "biome",
+    srcs = ["biome.bzl"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//lint/private:lint_aspect",
+    ],
+)
+
+bzl_library(
     name = "eslint",
     srcs = ["eslint.bzl"],
     visibility = ["//visibility:public"],

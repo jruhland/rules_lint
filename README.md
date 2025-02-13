@@ -36,7 +36,7 @@ Linters which are not language-specific:
 | HTML                   | [Prettier]            |                                  |
 | JSON                   | [Prettier]            |                                  |
 | Java                   | [google-java-format]  | [pmd] , [Checkstyle], [Spotbugs] |
-| JavaScript             | [Prettier]            | [ESLint]                         |
+| JavaScript             | [Prettier], [Biome]   | [ESLint], [Biome]                |
 | Jsonnet                | [jsonnetfmt]          |                                  |
 | Kotlin                 | [ktfmt]               | [ktlint]                         |
 | Markdown               | [Prettier]            | [Vale]                           |
@@ -52,6 +52,7 @@ Linters which are not language-specific:
 | TypeScript             | [Prettier]            | [ESLint]                         |
 | YAML                   | [yamlfmt]             |                                  |
 
+[biome]: https://biome.sh/
 [prettier]: https://prettier.io
 [google-java-format]: https://github.com/google/google-java-format
 [flake8]: https://flake8.pycqa.org/en/latest/index.html

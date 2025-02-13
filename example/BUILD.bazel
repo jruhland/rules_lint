@@ -30,6 +30,8 @@ exports_files(
     visibility = ["//visibility:public"],
 )
 
+exports_files(["biome.json"])
+
 js_library(
     name = "eslintrc",
     srcs = ["eslint.config.mjs"],

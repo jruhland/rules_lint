@@ -3,7 +3,7 @@
 load("@aspect_rules_lint//format:defs.bzl", "format_test")
 load("@aspect_rules_ts//ts:defs.bzl", "ts_project")
 load("@bazel_skylib//rules:write_file.bzl", "write_file")
-load("//tools/lint:linters.bzl", "checkstyle_test", "eslint_test", "flake8_test", "pmd_test", "ruff_test", "shellcheck_test")
+load("//tools/lint:linters.bzl", "biome_test", "checkstyle_test", "eslint_test", "flake8_test", "pmd_test", "ruff_test", "shellcheck_test")
 
 write_file(
     name = "ts_code_generator",
@@ -44,6 +44,11 @@ ts_project(
 
 eslint_test(
     name = "eslint_empty_report",
+    srcs = [":no_violations"],
+)
+
+biome_test(
+    name = "biome_empty_report",
     srcs = [":no_violations"],
 )
 
@@ -97,6 +102,19 @@ pmd_test(
 checkstyle_test(
     name = "checkstyle",
     srcs = ["//src:bar"],
+    tags = ["manual"],
+)
+
+biome_test(
+    name = "biome",
+    # NB: we must lint the `ts_typings` target that has the .ts files in srcs,
+    # not "//src:ts" which is just a js_library re-export.
+    # For end users it's not obvious that you have to "see inside" the macro to know
+    # which ts_project output target to lint.
+    # See https://github.com/aspect-build/rules_lint/issues/369
+    srcs = ["//src:ts_typings"],
+    # Expected to fail based on current content of the file.
+    # Normally you'd fix the file instead of tagging this test.
     tags = ["manual"],
 )
 
